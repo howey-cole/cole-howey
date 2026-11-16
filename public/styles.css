@@ -122,6 +122,9 @@ a:hover { text-decoration-thickness: 2px; }
   border-radius: 999px;
 }
 .icon-button:hover { border-color: var(--muted); }
+/* Placeholder until the URL is added: greyed out and not clickable. */
+.icon-button[aria-disabled="true"] { color: var(--muted); opacity: 0.55; cursor: default; }
+.icon-button[aria-disabled="true"]:hover { border-color: var(--line); }
 
 .menu-toggle {
   display: none;

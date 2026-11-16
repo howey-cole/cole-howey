@@ -1,11 +1,14 @@
 // Front end: one scrolling page of bands, a top bar and the chat.
 // Bands come from content.json, which "npm run build" generates from content/*.md.
 
-// Profile links for the icon buttons in the top bar. A button is hidden while its URL is empty.
+// Profile links for the icon buttons in the top bar. Paste each URL between the quotes.
 const LINKS = {
   LinkedIn: '',
   GitHub: '',
 };
+// While a URL is empty, its button shows greyed out as a placeholder that goes nowhere.
+// Set this to false before launch to hide any button that still has no URL.
+const SHOW_PLACEHOLDER_ICONS = true;
 
 // Optional images. Without them the site shows a placeholder block and the drawn background.
 const HEADSHOT = '/images/headshot.jpg';
@@ -158,8 +161,16 @@ function buildNav() {
 
   for (const [name, url] of Object.entries(LINKS)) {
     const button = $(`link-${name.toLowerCase()}`);
-    if (button && url) {
+    if (!button) continue;
+    if (url) {
       button.href = url;
+      button.hidden = false;
+    } else if (SHOW_PLACEHOLDER_ICONS) {
+      // No href, so it cannot be clicked or tabbed to; screen readers hear that it is coming.
+      button.removeAttribute('target');
+      button.setAttribute('aria-disabled', 'true');
+      button.setAttribute('aria-label', `${name} link coming soon`);
+      button.title = `${name} link coming soon`;
       button.hidden = false;
     }
   }
