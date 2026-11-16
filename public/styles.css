@@ -235,7 +235,15 @@ body.menu-open .menu { transform: none; visibility: visible; }
 .disclaimer { margin: 14px 0 0; color: var(--muted); font-size: 0.78rem; }
 
 /* ---------- Entries (content inside bands) ---------- */
-.entry + .entry { margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--line); }
+/* Each entry is a soft white card on the silver page. */
+.entry {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 32px 36px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+.entry + .entry { margin-top: 24px; }
 .entry h3 { margin: 0 0 4px; font-size: 1.3rem; line-height: 1.3; font-weight: 600; }
 .entry h4 { margin: 0 0 12px; font-size: 1.02rem; font-weight: 600; color: var(--text); }
 .entry h3 + h4 { color: var(--muted); font-weight: 500; }
@@ -292,4 +300,5 @@ body.menu-open .menu { transform: none; visibility: visible; }
   .tagline { font-size: 0.95rem; }
   .band-title { margin-left: 46px; margin-bottom: 24px; }
   .entry h3 { font-size: 1.2rem; }
+  .entry { padding: 22px 20px; border-radius: 16px; }
 }
