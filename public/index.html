@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Hidden from search engines until launch. Remove this line and edit robots.txt to go public. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Cole Howey — Analytics and decision science</title>
+  <meta name="description" content="Cole Howey: analytics and decision science leader. Ask the site's AI assistant about his work, education and projects.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="#/">
+        <span class="brand-name">Cole Howey</span>
+        <span class="brand-role">Analytics &amp; decision science</span>
+      </a>
+      <nav id="nav" aria-label="Site"></nav>
+      <p class="sidebar-note">The chat is an AI assistant that answers from the content of this site.</p>
+    </aside>
+
+    <main id="main">
+      <section id="chat-view" class="chat">
+        <div id="thread" class="thread" aria-live="polite">
+          <div id="welcome" class="welcome">
+            <h1>Ask about Cole's work</h1>
+            <p>Cole Howey is an analytics and decision science leader: experimentation, causal inference and applied machine learning for operational decisions. This AI assistant answers questions about his skills, experience and education.</p>
+            <div id="suggestions" class="suggestions"></div>
+          </div>
+        </div>
+        <form id="composer" class="composer" autocomplete="off">
+          <label class="visually-hidden" for="question">Your question</label>
+          <textarea id="question" rows="1" maxlength="1000" placeholder="Ask about Cole's skills, experience or education"></textarea>
+          <button type="submit" id="send">Send</button>
+        </form>
+        <p class="disclaimer">AI-generated answers can contain errors. The Work and School pages are the source.</p>
+      </section>
+
+      <article id="page-view" class="page" hidden></article>
+    </main>
+  </div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

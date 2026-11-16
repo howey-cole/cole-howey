@@ -1,0 +1,4 @@
+# Hidden from search engines until launch.
+# To go public, change "Disallow: /" to "Disallow:" and remove the robots meta tag in index.html.
+User-agent: *
+Disallow: /
