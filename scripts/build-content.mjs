@@ -63,7 +63,8 @@ function toHtml(markdown) {
     if (heading) {
       flushParagraph();
       closeList();
-      const level = heading[1].length;
+      // Two levels down: h1 is the name in the site header, h2 is each band's title.
+      const level = heading[1].length + 2;
       out.push(`<h${level}>${inline(heading[2])}</h${level}>`);
     } else if (bullet) {
       flushParagraph();
@@ -92,6 +93,8 @@ const site = pages.map((p) => ({
   section: p.meta.section,
   slug: p.slug,
   title: p.meta.title,
+  // Optional employer logo: a file name in public/logos/. Site only; never sent to the bot.
+  ...(p.meta.logo ? { logo: p.meta.logo } : {}),
   html: toHtml(p.body),
 }));
 

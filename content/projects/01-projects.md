@@ -2,7 +2,7 @@
 title: Projects
 section: projects
 order: 1
-status: published
+status: draft
 ---
 
 # Projects

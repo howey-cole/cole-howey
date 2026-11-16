@@ -10,36 +10,37 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <a class="brand" href="#/">
-        <span class="brand-name">Cole Howey</span>
-        <span class="brand-role">Analytics &amp; decision science</span>
-      </a>
-      <nav id="nav" aria-label="Site"></nav>
-      <p class="sidebar-note">The chat is an AI assistant that answers from the content of this site.</p>
-    </aside>
+  <button id="menu-toggle" class="menu-toggle" type="button" aria-controls="menu" aria-expanded="false" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 
-    <main id="main">
-      <section id="chat-view" class="chat">
-        <div id="thread" class="thread" aria-live="polite">
-          <div id="welcome" class="welcome">
-            <h1>Ask about Cole's work</h1>
-            <p>Cole Howey is an analytics and decision science leader: experimentation, causal inference and applied machine learning for operational decisions. This AI assistant answers questions about his skills, experience and education.</p>
-            <div id="suggestions" class="suggestions"></div>
-          </div>
-        </div>
+  <aside id="menu" class="menu" aria-label="Site menu">
+    <nav id="nav"></nav>
+  </aside>
+  <div id="backdrop" class="backdrop" hidden></div>
+
+  <main id="main">
+    <section id="top" class="band band-chat">
+      <div class="band-inner">
+        <header class="site-header">
+          <h1><a href="#top">Cole Howey</a></h1>
+          <p class="tagline">Analytics &amp; Decision Science · MBA, Carnegie Mellon · MS Applied Data Science candidate, UChicago</p>
+        </header>
+
+        <div id="thread" class="thread" aria-live="polite" hidden></div>
+
         <form id="composer" class="composer" autocomplete="off">
           <label class="visually-hidden" for="question">Your question</label>
-          <textarea id="question" rows="1" maxlength="1000" placeholder="Ask about Cole's skills, experience or education"></textarea>
+          <textarea id="question" rows="1" maxlength="1000" placeholder="Ask a question about Cole"></textarea>
           <button type="submit" id="send">Send</button>
         </form>
-        <p class="disclaimer">AI-generated answers can contain errors. The Work and School pages are the source.</p>
-      </section>
+        <div id="suggestions" class="suggestions" aria-label="Suggested questions"></div>
+        <p class="disclaimer">Answers come from an AI assistant and can contain errors.</p>
+      </div>
+    </section>
 
-      <article id="page-view" class="page" hidden></article>
-    </main>
-  </div>
+    <div id="bands"></div>
+  </main>
   <script src="/app.js" defer></script>
 </body>
 </html>
