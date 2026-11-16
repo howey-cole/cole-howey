@@ -144,7 +144,17 @@ body.menu-open .menu { transform: none; visibility: visible; }
 }
 
 /* ---------- Chat band ---------- */
-.site-header { margin-bottom: 32px; }
+/* The name and the line under it sit in one white bubble, like the section titles. */
+.site-header {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 32px;
+  padding: 22px 30px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
 .site-header h1 {
   margin: 0;
   font-size: 2.9rem;
@@ -297,6 +307,7 @@ body.menu-open .menu { transform: none; visibility: visible; }
   .band { padding: 76px 20px 56px; } /* top padding clears the hamburger button */
   .band-chat { padding-top: 76px; }
   .site-header h1 { font-size: 2.2rem; }
+  .site-header { padding: 18px 20px; border-radius: 22px; }
   .tagline { font-size: 0.95rem; }
   .band-title { margin-left: 46px; margin-bottom: 24px; }
   .entry h3 { font-size: 1.2rem; }
