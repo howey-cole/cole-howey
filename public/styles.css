@@ -2,13 +2,14 @@
 :root {
   --page: #f5f5f7;       /* light silver */
   --white: #ffffff;
-  --band-alt: #ececee;   /* the second band tone */
   --text: #1d1d1f;
   --muted: #5e5e63;
   --line: #d9d9de;
   --accent: #3b5b7a;     /* muted slate blue: links and the send button */
   --accent-text: #ffffff;
-  --menu-width: 240px;
+  --bar: 60px;           /* height of the top bar */
+  --column: 860px;       /* width of the centered content column */
+  --gutter: 40px;        /* space at the page edges */
   --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   color-scheme: light;
 }
@@ -28,6 +29,25 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Page background: the drawn bell curves, fixed behind everything. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("/images/bell-curves.svg") center / cover no-repeat;
+  opacity: 0.7;
+  pointer-events: none;
+}
+/* If public/images/background.jpg exists, app.js adds this class and the photo replaces the drawing,
+   under a light overlay so text stays readable. */
+html.has-photo-bg body::before {
+  background:
+    linear-gradient(rgba(245, 245, 247, 0.78), rgba(245, 245, 247, 0.78)),
+    url("/images/background.jpg") center / cover no-repeat;
+  opacity: 1;
+}
+
 a { color: var(--accent); }
 a:hover { text-decoration-thickness: 2px; }
 
@@ -44,88 +64,107 @@ a:hover { text-decoration-thickness: 2px; }
 
 [hidden] { display: none !important; }
 
-/* ---------- Hamburger button ---------- */
-.menu-toggle {
-  position: fixed;
-  top: 14px;
-  left: 14px;
-  z-index: 30;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  cursor: pointer;
-}
-.menu-toggle span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: var(--text);
-  border-radius: 1px;
-}
-
-/* ---------- Left menu ---------- */
-.menu {
+/* ---------- Top bar ---------- */
+.topbar {
   position: fixed;
   top: 0;
-  bottom: 0;
   left: 0;
+  right: 0;
   z-index: 20;
-  width: var(--menu-width);
-  padding: 76px 14px 24px;
-  background: var(--page); /* same as the page, so the menu blends in */
-  overflow-y: auto;
-  transform: translateX(-100%);
-  visibility: hidden;
+  height: var(--bar);
+  background: rgba(245, 245, 247, 0.88);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
 }
-body.menu-open .menu { transform: none; visibility: visible; }
+.topbar-inner {
+  position: relative;
+  height: 100%;
+  max-width: calc(var(--column) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
-.menu ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-.menu a {
+.nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; }
+.nav a {
   display: block;
-  padding: 9px 12px;
-  border-radius: 8px;
+  padding: 5px 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
   color: var(--muted);
   text-decoration: none;
-  font-size: 0.95rem;
-  line-height: 1.35;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  white-space: nowrap;
 }
-.menu a:hover { color: var(--text); background: var(--band-alt); }
-.menu a[aria-current] { color: var(--text); font-weight: 600; background: var(--band-alt); }
-.menu li.external { margin-top: 12px; }
-
-.backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 15;
-  background: rgba(29, 29, 31, 0.25);
-}
-
-/* Wide screens: the open menu sits beside the page instead of over it. */
-@media (min-width: 1000px) {
-  body.menu-open main { margin-left: var(--menu-width); }
-}
-@media (max-width: 999px) {
-  .menu { box-shadow: 0 0 24px rgba(0, 0, 0, 0.12); }
+.nav a:hover { color: var(--text); }
+/* The link for the band in view gets a white bubble, like the section titles. */
+.nav a[aria-current] {
+  color: var(--text);
+  font-weight: 600;
+  background: var(--white);
+  border-color: var(--line);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* ---------- Bands ---------- */
-.band { padding: 88px 40px; scroll-margin-top: 0; }
-.band-inner { max-width: 860px; margin: 0 auto; }
+.social { margin-left: auto; display: flex; gap: 8px; }
+.icon-button {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.icon-button:hover { border-color: var(--muted); }
 
-/* One background for the whole page: the header and every band share it. */
-.band-chat { padding-top: 96px; }
+.menu-toggle {
+  display: none;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 16px;
+  cursor: pointer;
+}
 
-/* Section titles are small white bubbles that stay in view while their band is on screen. */
+/* Phones: the section links fold into the Menu button; the icon buttons stay. */
+@media (max-width: 759px) {
+  :root { --gutter: 20px; }
+  .menu-toggle { display: block; }
+  .nav {
+    display: none;
+    position: absolute;
+    top: calc(var(--bar) - 1px);
+    left: 0;
+    right: 0;
+    padding: 10px var(--gutter) 14px;
+    background: var(--page);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+  body.nav-open .nav { display: block; }
+  .nav ul { flex-direction: column; gap: 2px; }
+  .nav a { padding: 10px 14px; font-size: 1rem; }
+}
+
+/* ---------- Bands: one centered column ---------- */
+.band { padding: 72px var(--gutter); scroll-margin-top: var(--bar); }
+.band-inner { max-width: var(--column); margin: 0 auto; }
+.band-chat { padding-top: calc(var(--bar) + 56px); }
+
+/* Section titles are small white bubbles that stay just under the bar while their band is on screen. */
 .band-title {
   position: sticky;
-  top: 19px; /* lines up with the middle of the hamburger button */
+  top: calc(var(--bar) + 12px);
   z-index: 5;
   display: inline-block;
   margin: 0 0 28px;
@@ -138,22 +177,16 @@ body.menu-open .menu { transform: none; visibility: visible; }
   border-radius: 999px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
-/* Without the open menu beside the page, keep the bubble clear of the hamburger. */
-@media (max-width: 999px) {
-  .band-title { margin-left: 30px; }
-}
 
 /* ---------- Chat band ---------- */
-/* The name and the line under it sit in one white bubble, like the section titles. */
+/* The name card: the same width as the question box and the cards below. */
 .site-header {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: 32px;
-  padding: 22px 30px;
+  margin-bottom: 24px;
+  padding: 26px 32px;
   background: var(--white);
   border: 1px solid var(--line);
-  border-radius: 28px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.04);
 }
 .site-header h1 {
   margin: 0;
@@ -233,7 +266,7 @@ body.menu-open .menu { transform: none; visibility: visible; }
   font-size: 0.82rem;
   line-height: 1.35;
   color: var(--muted);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.7);
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 6px 12px;
@@ -275,41 +308,47 @@ body.menu-open .menu { transform: none; visibility: visible; }
 .logo { height: 30px; width: auto; flex: none; }
 
 /* ---------- About band ---------- */
+/* Row 1: photo and paragraphs. Row 2: background and education. Row 3: skills. */
+.about-row { display: grid; column-gap: 40px; }
+.about-row-top { grid-template-columns: 220px minmax(0, 1fr); align-items: start; }
+.about-row-middle {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.about-full { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--line); }
+
+/* Portrait photo with card-like corners. The grey shows only if the file is missing. */
+.about-photo {
+  aspect-ratio: 4 / 5;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #e4e4e8;
+}
+.about-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
 .about-intro p:first-of-type { font-size: 1.1rem; }
 .about-group h4 { margin-bottom: 8px; }
-.about-group + .about-group { margin-top: 28px; }
-.about-full { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
-.about-side ul { padding-left: 1.1em; font-size: 0.95rem; }
+.about-group + .about-group { margin-top: 24px; }
+.about-left ul, .about-right ul { padding-left: 1.1em; font-size: 0.95rem; }
+.about-group p:last-child, .about-group ul:last-child { margin-bottom: 0; }
 
-@media (min-width: 760px) {
-  .about-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    column-gap: 48px;
-  }
-  .about-full { grid-column: 1 / -1; }
-}
-
-/* Phones: one column, in the order paragraphs, background, education, skills. */
+/* Phones: one column, photo first. */
 @media (max-width: 759px) {
-  .about-grid { display: flex; flex-direction: column; }
-  .about-side { display: contents; }
-  .about-intro { order: 1; }
-  .about-group { order: 3; margin-top: 28px; }
-  .about-background-in-brief { order: 2; }
-  .about-education { order: 3; }
-  .about-full { order: 4; }
-  .about-based-in { order: 5; }
+  .about-row-top, .about-row-middle { grid-template-columns: minmax(0, 1fr); }
+  .about-photo { width: min(240px, 100%); margin: 0 auto 24px; }
+  .about-right { margin-top: 24px; }
 }
 
 /* ---------- Narrow screens ---------- */
 @media (max-width: 759px) {
-  .band { padding: 76px 20px 56px; } /* top padding clears the hamburger button */
-  .band-chat { padding-top: 76px; }
+  .band { padding: 48px var(--gutter); }
+  .band-chat { padding-top: calc(var(--bar) + 28px); }
+  .site-header { padding: 20px 22px; border-radius: 16px; }
   .site-header h1 { font-size: 2.2rem; }
-  .site-header { padding: 18px 20px; border-radius: 22px; }
   .tagline { font-size: 0.95rem; }
-  .band-title { margin-left: 46px; margin-bottom: 24px; }
+  .band-title { margin-bottom: 20px; }
   .entry h3 { font-size: 1.2rem; }
   .entry { padding: 22px 20px; border-radius: 16px; }
 }

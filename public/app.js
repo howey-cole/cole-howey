@@ -1,11 +1,15 @@
-// Front end: one scrolling page of bands, a left menu and the chat.
+// Front end: one scrolling page of bands, a top bar and the chat.
 // Bands come from content.json, which "npm run build" generates from content/*.md.
 
-// Add your links here. A link is hidden while its value is empty.
+// Profile links for the icon buttons in the top bar. A button is hidden while its URL is empty.
 const LINKS = {
-  GitHub: '',
   LinkedIn: '',
+  GitHub: '',
 };
+
+// Optional images. Without them the site shows a placeholder block and the drawn background.
+const HEADSHOT = '/images/headshot.jpg';
+const BACKGROUND_PHOTO = '/images/background.jpg';
 
 const SUGGESTIONS = [
   "What does Cole do in his current role?",
@@ -14,8 +18,8 @@ const SUGGESTIONS = [
   "What is Cole studying at the University of Chicago?",
 ];
 
-// Menu and band order: [content section, page anchor, label].
-// A band appears only if its section has at least one published page.
+// Bar and band order: [content section, page anchor, label].
+// A band and its link appear only if the section has at least one published page.
 const SECTIONS = [
   ['about', 'about', 'About'],
   ['work', 'experience', 'Professional Experience'],
@@ -25,11 +29,12 @@ const SECTIONS = [
   ['contact', 'contact', 'Contact'],
 ];
 
-// About band: headings listed here span the full width; the others
-// ("Background in brief", "Education", "Based in") form the right-hand column.
+// About band rows: photo and paragraphs; "Background in brief" beside "Education";
+// then the headings listed in ABOUT_FULL across the full width.
+const ABOUT_LEFT = ['Background in brief'];
 const ABOUT_FULL = ['Skills'];
 
-const WIDE = window.matchMedia('(min-width: 1000px)');
+const PHONE = window.matchMedia('(max-width: 759px)');
 const $ = (id) => document.getElementById(id);
 const history = []; // the conversation, kept in memory only
 let pages = [];
@@ -56,32 +61,49 @@ function addLogo(entry, logo) {
   head.append(img, heading);
 }
 
-// Splits the About page at its headings into the two-column layout.
+// The headshot, in a grey block of the same size that shows on its own if the file is missing.
+function makePhoto() {
+  const frame = document.createElement('div');
+  frame.className = 'about-photo';
+  const img = document.createElement('img');
+  img.src = HEADSHOT;
+  img.alt = 'Cole Howey';
+  img.width = 440;
+  img.height = 550;
+  img.addEventListener('error', () => img.remove());
+  frame.appendChild(img);
+  return frame;
+}
+
+// Splits the About page at its headings into rows.
 function layOutAbout(entry) {
-  const grid = document.createElement('div');
-  grid.className = 'about-grid';
-  const intro = document.createElement('div');
-  intro.className = 'about-intro';
-  const side = document.createElement('div');
-  side.className = 'about-side';
-  const full = document.createElement('div');
-  full.className = 'about-full';
+  const box = (name) => {
+    const div = document.createElement('div');
+    div.className = name;
+    return div;
+  };
+  const grid = box('about-grid');
+  const intro = box('about-intro');
+  const left = box('about-left');
+  const right = box('about-right');
+  const full = box('about-full');
 
   let target = intro;
   for (const node of [...entry.children]) {
-    if (node.tagName === 'H3') {
-      node.hidden = true; // the name already appears in the site header
-    }
+    if (node.tagName === 'H3') node.hidden = true; // the name already appears in the name card
     if (node.tagName === 'H4') {
-      const group = document.createElement('div');
-      group.className = `about-group about-${slugify(node.textContent)}`;
       const name = node.textContent.trim();
-      (ABOUT_FULL.includes(name) ? full : side).appendChild(group);
+      const group = box(`about-group about-${slugify(name)}`);
+      (ABOUT_FULL.includes(name) ? full : ABOUT_LEFT.includes(name) ? left : right).appendChild(group);
       target = group;
     }
     target.appendChild(node);
   }
-  grid.append(intro, side, full);
+  const top = box('about-row about-row-top');
+  top.append(makePhoto(), intro);
+  const middle = box('about-row about-row-middle');
+  middle.append(left, right);
+  grid.append(top, middle, full);
   entry.replaceChildren(grid);
 }
 
@@ -119,63 +141,60 @@ function buildBands() {
   }
 }
 
-/* ---------- Menu ---------- */
+/* ---------- Top bar ---------- */
 
 function buildNav() {
-  const nav = $('nav');
   const list = document.createElement('ul');
-  const add = (label, href, external) => {
+  for (const [, anchor, label] of SECTIONS) {
+    if (!$(anchor)) continue;
     const li = document.createElement('li');
     const a = document.createElement('a');
-    a.href = href;
-    a.textContent = external ? `${label} ↗` : label;
-    if (external) {
-      a.target = '_blank';
-      a.rel = 'noopener';
-      li.className = 'external';
-    }
+    a.href = `#${anchor}`;
+    a.textContent = label;
     li.appendChild(a);
     list.appendChild(li);
-  };
-  for (const [, anchor, label] of SECTIONS) {
-    if ($(anchor)) add(label, `#${anchor}`);
   }
-  for (const [label, url] of Object.entries(LINKS)) {
-    if (url) add(label, url, true);
+  $('nav').appendChild(list);
+
+  for (const [name, url] of Object.entries(LINKS)) {
+    const button = $(`link-${name.toLowerCase()}`);
+    if (button && url) {
+      button.href = url;
+      button.hidden = false;
+    }
   }
-  nav.appendChild(list);
 }
 
-function setMenu(open) {
-  document.body.classList.toggle('menu-open', open);
+function setNavOpen(open) {
+  document.body.classList.toggle('nav-open', open);
   $('menu-toggle').setAttribute('aria-expanded', String(open));
-  $('menu').inert = !open;
-  $('backdrop').hidden = !open || WIDE.matches;
 }
 
-function setUpMenu() {
-  setMenu(WIDE.matches);
-  WIDE.addEventListener('change', () => setMenu(WIDE.matches));
+// On phones the section links fold into the Menu button.
+function setUpNav() {
+  const isOpen = () => document.body.classList.contains('nav-open');
   $('menu-toggle').addEventListener('click', () => {
-    const open = !document.body.classList.contains('menu-open');
-    setMenu(open);
-    if (open && !WIDE.matches) $('nav').querySelector('a')?.focus();
+    setNavOpen(!isOpen());
+    if (isOpen()) $('nav').querySelector('a')?.focus();
   });
-  $('backdrop').addEventListener('click', () => setMenu(false));
+  $('nav').addEventListener('click', (event) => {
+    if (event.target.closest('a')) setNavOpen(false);
+  });
+  document.addEventListener('click', (event) => {
+    if (isOpen() && !event.target.closest('.topbar')) setNavOpen(false);
+  });
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !WIDE.matches && document.body.classList.contains('menu-open')) {
-      setMenu(false);
+    if (event.key === 'Escape' && isOpen()) {
+      setNavOpen(false);
       $('menu-toggle').focus();
     }
   });
-  $('nav').addEventListener('click', (event) => {
-    if (event.target.closest('a') && !WIDE.matches) setMenu(false);
-  });
+  PHONE.addEventListener('change', () => setNavOpen(false));
 }
 
-// Highlights the menu item for the band in the middle of the screen.
+// Marks the bar link for the band in the middle of the screen.
 function trackCurrentBand() {
-  const links = [...$('nav').querySelectorAll('a[href^="#"]')];
+  const links = [...$('nav').querySelectorAll('a')];
   const mark = (id) => {
     for (const a of links) {
       if (a.getAttribute('href') === `#${id}`) a.setAttribute('aria-current', 'location');
@@ -209,6 +228,13 @@ function redirectOldLinks() {
 function scrollToHash(behavior = 'smooth') {
   const id = decodeURIComponent(location.hash.slice(1));
   if (id) document.getElementById(id)?.scrollIntoView({ behavior });
+}
+
+// Uses public/images/background.jpg as the page background when that file exists.
+function useBackgroundPhotoIfPresent() {
+  const probe = new Image();
+  probe.addEventListener('load', () => document.documentElement.classList.add('has-photo-bg'));
+  probe.src = BACKGROUND_PHOTO;
 }
 
 /* ---------- Chat ---------- */
@@ -285,7 +311,8 @@ function setUpChat() {
 
 async function start() {
   redirectOldLinks();
-  setUpMenu();
+  useBackgroundPhotoIfPresent();
+  setUpNav();
   setUpChat();
   try {
     pages = (await (await fetch('/content.json')).json()).pages;
