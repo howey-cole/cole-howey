@@ -3,12 +3,11 @@
 
 // Profile links for the icon buttons in the top bar. Paste each URL between the quotes.
 const LINKS = {
-  LinkedIn: '',
-  GitHub: '',
+  LinkedIn: 'https://www.linkedin.com/in/cole-howey/',
+  GitHub: '', // add later, once projects are uploaded
 };
-// While a URL is empty, its button shows greyed out as a placeholder that goes nowhere.
-// Set this to false before launch to hide any button that still has no URL.
-const SHOW_PLACEHOLDER_ICONS = true;
+// true: a button with an empty URL shows greyed out as a placeholder. false: it is hidden.
+const SHOW_PLACEHOLDER_ICONS = false;
 
 // Optional images. Without them the site shows a placeholder block and the drawn background.
 const HEADSHOT = '/images/headshot.jpg';

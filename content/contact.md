@@ -9,6 +9,4 @@ status: published
 
 For questions this site does not cover, including compensation and availability, please contact Cole directly.
 
-<!-- TODO before launch: add the contact method you want public, for example
-     - [LinkedIn](https://www.linkedin.com/in/your-handle)
--->
+- [LinkedIn](https://www.linkedin.com/in/cole-howey/)
