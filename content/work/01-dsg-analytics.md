@@ -1,5 +1,5 @@
 ---
-title: Dick's Sporting Goods — Sr. Manager of Data Analytics—Operations
+title: Dick's Sporting Goods — Sr. Manager of Data Analytics
 section: work
 order: 1
 status: published
@@ -7,7 +7,7 @@ status: published
 
 # Dick's Sporting Goods
 
-## Sr. Manager of Data Analytics—Operations (October 2024 – present)
+## Sr. Manager of Data Analytics (October 2024 – present)
 
 Cole leads the analytics team that acts as internal consultants to Operations, Technology and Finance. The work covers store operations, online order fulfillment from stores, and the supply chain from distribution centers to stores. He grew the team from one analyst to five, wrote the hiring documentation, and coaches analysts on methods and stakeholder communication.
 

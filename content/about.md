@@ -9,13 +9,13 @@ status: published
 
 **Analytics and decision science leader: experimentation, causal inference and applied machine learning for operational decisions.**
 
-Cole is Sr. Manager of Data Analytics—Operations at Dick's Sporting Goods, where he leads the analytics team that serves Operations, Technology and Finance. He designs A/B tests, builds causal models and applies machine learning so that leaders can decide what to roll out, what to stop and why a metric moved.
+Cole is a Sr. Manager of Data Analytics at Dick's Sporting Goods, where he leads the analytics team that serves Operations, Technology and Finance. He designs A/B tests, builds causal models and applies machine learning to inform intervention and investment decisions and to identify the causes of changes in key metrics.
 
-He also defines and governs the metrics and data those decisions depend on. He has designed new operational metrics, co-led an enterprise inventory data model, and worked with data engineering on table schemas, event instrumentation and governed tables on Azure Databricks.
+He also defines and governs the metrics and data on which those decisions depend. He has designed new operational metrics, co-led an enterprise inventory data model, and worked with data engineering on table schemas, event instrumentation and governed tables on Azure Databricks.
 
 ## Background in brief
 
-- Sr. Manager of Data Analytics—Operations, Dick's Sporting Goods (October 2024 – present)
+- Sr. Manager of Data Analytics, Dick's Sporting Goods (October 2024 – present)
 - Sr. Manager of Strategy, Executive Development Program, Dick's Sporting Goods (September 2023 – October 2024)
 - MBA Associate, Commercial Analytics & Supply Chain Operations, Taiho Oncology (May – August 2022)
 - Assistant Program Manager, Lockheed Martin (part time, during his undergraduate degree)
