@@ -10,7 +10,7 @@
    "section": "contact",
    "slug": "contact",
    "title": "Contact",
-   "html": "<h3>Contact</h3>\n<p>For questions this site does not cover, including compensation and availability, please contact Cole directly.</p>\n<ul>\n<li><a href=\"https://www.linkedin.com/in/cole-howey/\">LinkedIn</a></li>\n</ul>"
+   "html": "<h3>Contact</h3>\n<p>For questions this site does not cover, including compensation and availability, please contact Cole directly.</p>\n<ul>\n<li><a href=\"https://www.linkedin.com/in/cole-howey/\">LinkedIn</a></li>\n<li><a href=\"https://github.com/howey-cole\">GitHub</a></li>\n</ul>"
   },
   {
    "section": "school",

@@ -4,7 +4,7 @@
 // Profile links for the icon buttons in the top bar. Paste each URL between the quotes.
 const LINKS = {
   LinkedIn: 'https://www.linkedin.com/in/cole-howey/',
-  GitHub: '', // add later, once projects are uploaded
+  GitHub: 'https://github.com/howey-cole',
 };
 // true: a button with an empty URL shows greyed out as a placeholder. false: it is hidden.
 const SHOW_PLACEHOLDER_ICONS = false;

@@ -1,4 +1,6 @@
-# Hidden from search engines until launch.
-# To go public, change "Disallow: /" to "Disallow:" and remove the robots meta tag in index.html.
+# Hidden from search engines until launch; LinkedIn allowed for link previews.
+User-agent: LinkedInBot
+Allow: /
+
 User-agent: *
 Disallow: /

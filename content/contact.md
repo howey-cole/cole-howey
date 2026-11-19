@@ -10,3 +10,4 @@ status: published
 For questions this site does not cover, including compensation and availability, please contact Cole directly.
 
 - [LinkedIn](https://www.linkedin.com/in/cole-howey/)
+- [GitHub](https://github.com/howey-cole)
