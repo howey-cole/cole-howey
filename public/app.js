@@ -31,10 +31,24 @@ const SECTIONS = [
   ['contact', 'contact', 'Contact'],
 ];
 
-// About band rows: photo and paragraphs; "Background in brief" beside "Education";
-// then the headings listed in ABOUT_FULL across the full width.
-const ABOUT_LEFT = ['Background in brief'];
+// About band rows: photo, paragraphs and the headings in ABOUT_INTRO; then the career
+// timeline; then the headings listed in ABOUT_FULL across the full width.
+const ABOUT_INTRO = ['Based in'];
 const ABOUT_FULL = ['Skills'];
+const TIMELINE_HEADING = 'Career timeline';
+const TIMELINE_CURRENT = 'Current'; // entries under this label get a filled dot
+
+// Timeline tiles: initials for each organization. To show a real logo instead, put the
+// image in public/logos/ and type its file name in "logo" (for example 'dsg.png').
+const ORGS = {
+  "Dick's Sporting Goods": { initials: 'DSG', logo: '' },
+  'University of Chicago': { initials: 'UC', logo: '' },
+  'Carnegie Mellon Tepper': { initials: 'CMU', logo: '' },
+  'Taiho Oncology': { initials: 'TO', logo: '' },
+  'University of Central Florida': { initials: 'UCF', logo: '' },
+  'Lockheed Martin': { initials: 'LM', logo: '' },
+  'U.S. Air Force': { initials: 'USAF', logo: '' },
+};
 
 const PHONE = window.matchMedia('(max-width: 759px)');
 const $ = (id) => document.getElementById(id);
@@ -86,8 +100,7 @@ function layOutAbout(entry) {
   };
   const grid = box('about-grid');
   const intro = box('about-intro');
-  const left = box('about-left');
-  const right = box('about-right');
+  const middle = box('about-row about-row-middle');
   const full = box('about-full');
 
   let target = intro;
@@ -96,17 +109,79 @@ function layOutAbout(entry) {
     if (node.tagName === 'H4') {
       const name = node.textContent.trim();
       const group = box(`about-group about-${slugify(name)}`);
-      (ABOUT_FULL.includes(name) ? full : ABOUT_LEFT.includes(name) ? left : right).appendChild(group);
+      (ABOUT_FULL.includes(name) ? full : ABOUT_INTRO.includes(name) ? intro : middle).appendChild(group);
       target = group;
     }
     target.appendChild(node);
   }
+  const timeline = middle.querySelector(`.about-${slugify(TIMELINE_HEADING)}`);
+  if (timeline) buildTimeline(timeline);
   const top = box('about-row about-row-top');
   top.append(makePhoto(), intro);
-  const middle = box('about-row about-row-middle');
-  middle.append(left, right);
-  grid.append(top, middle, full);
+  grid.append(top);
+  if (middle.children.length) grid.append(middle);
+  if (full.children.length) grid.append(full);
   entry.replaceChildren(grid);
+}
+
+// An organization tile: the logo file if one is named in ORGS, otherwise initials.
+function makeTile(org) {
+  const tile = document.createElement('span');
+  tile.className = 'tl-tile';
+  tile.setAttribute('aria-hidden', 'true');
+  const known = ORGS[org] || {};
+  tile.textContent = known.initials || org.split(/\s+/).map((word) => word[0]).join('').slice(0, 3);
+  if (known.logo) {
+    const img = document.createElement('img');
+    img.src = `/logos/${encodeURIComponent(known.logo)}`;
+    img.alt = '';
+    img.addEventListener('load', () => tile.replaceChildren(img)); // on error the initials stay
+  }
+  return tile;
+}
+
+// Turns the "Career timeline" group (h5 labels, each followed by a list of
+// "Title | Organization | Years | Note" lines) into a vertical timeline.
+function buildTimeline(group) {
+  const timeline = document.createElement('div');
+  timeline.className = 'timeline';
+  let list = null;
+  let current = false;
+  for (const node of [...group.children]) {
+    if (node.tagName === 'H5') {
+      const section = document.createElement('section');
+      section.className = 'tl-section';
+      node.className = 'tl-label';
+      list = document.createElement('ol');
+      list.className = 'tl-items';
+      current = node.textContent.trim() === TIMELINE_CURRENT;
+      section.append(node, list);
+      timeline.appendChild(section);
+    } else if (node.tagName === 'UL' && list) {
+      for (const li of node.querySelectorAll('li')) {
+        const [title, org = '', years = '', note = ''] = li.textContent.split('|').map((s) => s.trim());
+        const item = document.createElement('li');
+        item.className = `tl-item${current ? ' is-current' : ''}`;
+        const dot = document.createElement('span');
+        dot.className = 'tl-dot';
+        dot.setAttribute('aria-hidden', 'true');
+        const body = document.createElement('div');
+        body.className = 'tl-body';
+        const parts = [['strong', 'tl-title', title], ['span', 'tl-org', org], ['span', 'tl-years', years], ['em', 'tl-note', note]];
+        for (const [tag, cls, text] of parts) {
+          if (!text) continue;
+          const el = document.createElement(tag);
+          el.className = cls;
+          el.textContent = text;
+          body.appendChild(el);
+        }
+        item.append(dot, makeTile(org), body);
+        list.appendChild(item);
+      }
+      node.remove();
+    }
+  }
+  group.appendChild(timeline);
 }
 
 function buildBands() {

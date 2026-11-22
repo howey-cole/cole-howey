@@ -13,19 +13,26 @@ Cole is a Sr. Manager of Data Analytics at Dick's Sporting Goods, where he leads
 
 He also defines and governs the metrics and data on which those decisions depend. He has designed new operational metrics, co-led an enterprise inventory data model, and worked with data engineering on table schemas, event instrumentation and governed tables on Azure Databricks.
 
-## Background in brief
+## Career timeline
 
-- Sr. Manager of Data Analytics, Dick's Sporting Goods (October 2024 – present)
-- Sr. Manager of Strategy, Executive Development Program, Dick's Sporting Goods (September 2023 – October 2024)
-- MBA Associate, Commercial Analytics & Supply Chain Operations, Taiho Oncology (May – August 2022)
-- Assistant Program Manager, Lockheed Martin (part time, during his undergraduate degree)
-- U.S. Air Force, active duty (August 2012 – December 2017), then Air National Guard (through May 2020)
+<!-- The site draws this as a vertical timeline. Each line: **Title** | Organization | Years | optional note. -->
 
-## Education
+### Current
 
-- MS, Applied Data Science, University of Chicago (part time, started Autumn 2026, expected March 2028)
-- MBA, Business Analytics Track, Carnegie Mellon University, Tepper School of Business (May 2023)
-- BS, Civil Engineering, University of Central Florida (May 2021)
+- **Sr. Manager of Data Analytics** | Dick's Sporting Goods | 2024–present | Leads a five-analyst experimentation and decision science team.
+- **MS Applied Data Science candidate** | University of Chicago | Expected 2028 (concurrent)
+
+### Business school and transition
+
+- **Sr. Manager of Strategy, Executive Development Program** | Dick's Sporting Goods | 2023–2024 | Post-MBA leadership program. Strategy, Marketing Personalization, Loss Prevention.
+- **MBA, Business Analytics Track** | Carnegie Mellon Tepper | 2023
+- **MBA Associate, Commercial Analytics & Supply Chain Operations** | Taiho Oncology | 2022 | CEO-directed sales-rep impact analysis, presented to the C-suite.
+
+### Engineering and military service
+
+- **B.S. Civil Engineering** | University of Central Florida | 2021
+- **Assistant Program Manager, JAGM Missile Program** | Lockheed Martin | 2019
+- **Staff Sergeant** | U.S. Air Force | 2012–2017 | Promoted three years ahead of schedule.
 
 ## Skills
 
