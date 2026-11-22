@@ -18,4 +18,4 @@ Cole enlisted at 18 and served about five and a half years on active duty in str
 
 ## Air National Guard (through May 2020)
 
-Cole continued to serve in the Air National Guard while he completed his civil engineering degree and worked part time at Lockheed Martin.
+Cole continued to serve in the Air National Guard while he completed his civil engineering degree and worked part time at Lockheed Martin through the UCF/Lockheed Martin College Work Experience Program.

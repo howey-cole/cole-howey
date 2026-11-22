@@ -47,7 +47,7 @@ const ORGS = {
   'Carnegie Mellon Tepper': { initials: 'CMU', logo: 'cmu.png', fill: true },
   'Taiho Oncology': { initials: 'TO', logo: 'taiho.png' },
   'University of Central Florida': { initials: 'UCF', logo: 'ucf.png' },
-  'Lockheed Martin': { initials: 'LM', logo: '' },
+  'Lockheed Martin (UCF College Work Experience Program)': { initials: 'LM', logo: '' },
   'U.S. Air Force': { initials: 'USAF', logo: 'usaf.png' },
 };
 

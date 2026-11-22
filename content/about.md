@@ -31,7 +31,7 @@ He also defines and governs the metrics and data on which those decisions depend
 ### Engineering and military service
 
 - **B.S. Civil Engineering** | University of Central Florida | 2021
-- **Assistant Program Manager, JAGM Missile Program** | Lockheed Martin | 2019
+- **Program Management Intern, JAGM Missile Program** | Lockheed Martin (UCF College Work Experience Program) | 2019
 - **Staff Sergeant** | U.S. Air Force | 2012–2017 | Promoted three years ahead of schedule.
 
 ## Skills
