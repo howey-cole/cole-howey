@@ -40,14 +40,15 @@ const TIMELINE_CURRENT = 'Current'; // entries under this label get a filled dot
 
 // Timeline tiles: initials for each organization. To show a real logo instead, put the
 // image in public/logos/ and type its file name in "logo" (for example 'dsg.png').
+// fill: true for a logo that is a solid square, so it fills the tile edge to edge.
 const ORGS = {
-  "Dick's Sporting Goods": { initials: 'DSG', logo: '' },
-  'University of Chicago': { initials: 'UC', logo: '' },
-  'Carnegie Mellon Tepper': { initials: 'CMU', logo: '' },
-  'Taiho Oncology': { initials: 'TO', logo: '' },
-  'University of Central Florida': { initials: 'UCF', logo: '' },
+  "Dick's Sporting Goods": { initials: 'DSG', logo: 'Dicks.png', fill: true },
+  'University of Chicago': { initials: 'UC', logo: 'Uchicago.png' },
+  'Carnegie Mellon Tepper': { initials: 'CMU', logo: 'cmu.png', fill: true },
+  'Taiho Oncology': { initials: 'TO', logo: 'taiho.png' },
+  'University of Central Florida': { initials: 'UCF', logo: 'ucf.png' },
   'Lockheed Martin': { initials: 'LM', logo: '' },
-  'U.S. Air Force': { initials: 'USAF', logo: '' },
+  'U.S. Air Force': { initials: 'USAF', logo: 'usaf.png' },
 };
 
 const PHONE = window.matchMedia('(max-width: 759px)');
@@ -135,7 +136,11 @@ function makeTile(org) {
     const img = document.createElement('img');
     img.src = `/logos/${encodeURIComponent(known.logo)}`;
     img.alt = '';
-    img.addEventListener('load', () => tile.replaceChildren(img)); // on error the initials stay
+    img.addEventListener('load', () => {
+      tile.replaceChildren(img);
+      tile.classList.add('has-logo');
+      if (known.fill) tile.classList.add('fill');
+    }); // on error the initials stay
   }
   return tile;
 }
